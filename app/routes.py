@@ -118,7 +118,7 @@ def add_daily_totals():
             program_rate = program.rate
 
             # Calculate this program's contribution to the daily total
-            daily_total += number_of_participants * program_rate
+            daily_total += float(number_of_participants) * program_rate
 
             print(f"Checking for existing entry - Program ID: {program.id}, Date: {entry_date}")
 
@@ -156,7 +156,7 @@ def add_daily_totals():
             TotalModel.date <= cutoff_date
         ).order_by(TotalModel.date.desc()).first()
 
-        previous_grand_total = prior_entry.grand_total if prior_entry else 0.0
+        previous_grand_total = prior_entry.grand_total if prior_entry else float(0.0)
 
         updated_grand_total = previous_grand_total + daily_total
 
