@@ -1,0 +1,43 @@
+<h1>Program Table</h1>
+<table border="1">
+    <tr>
+        <th>ID</th><th>Name</th><th>Rate</th>
+    </tr>
+    {% for program in programs %}
+    <tr>
+        <td>{{ program.id }}</td>
+        <td>{{ program.name }}</td>
+        <td>{{ program.rate }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h1>Support Staff Table</h1>
+<table border="1">
+    <tr>
+        <th>ID</th><th>Program ID</th><th>Name</th><th>Salary</th>
+    </tr>
+    {% for staff_member in staff %}
+    <tr>
+        <td>{{ staff_member.id }}</td>
+        <td>{{ staff_member.program_id }}</td>
+        <td>{{ staff_member.name }}</td>
+        <td>{{ staff_member.salary }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h1>Daily Entries Table</h1>
+<table border="1">
+    <tr>
+        <th>ID</th><th>Program ID</th><th># Participants</th><th>Date</th>
+    </tr>
+    {% for entry in entries %}
+    <tr>
+        <td>{{ entry.id }}</td>
+        <td>{{ entry.program_id }}</td>
+        <td>{{ entry.number_of_participants }}</td>
+        <td>{{ entry.date }}</td>
+    </tr>
+    {% endfor %}
+</table>

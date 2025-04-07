@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
 
+
 db = SQLAlchemy()
 
 def create_app():
@@ -15,6 +16,11 @@ def create_app():
     app.register_blueprint(main)
 
     with app.app_context():
+        from app.models import TotalModel
         db.create_all()
+
+        if TotalModel.query.first() is None:
+            db.session.add(TotalModel(0.0, "Database created"))
+            db.session.commit()
 
     return app

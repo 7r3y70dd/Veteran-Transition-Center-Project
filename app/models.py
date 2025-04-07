@@ -4,6 +4,8 @@ from . import db
 
 from datetime import datetime
 from . import db  # Import the db instance from your app
+from datetime import date
+
 
 # Define a CustomModel with three integers and calculated field
 # class PopulationsModel(db.Model):
@@ -73,12 +75,9 @@ class CostsPerProgramModel(db.Model):
     name = db.Column(db.String(100), nullable=False)
     salary = db.Column(db.Float, nullable=False)
 
-    def __init__(self, program_name, cost, name):
-        program = ProgramModel.query.filter_by(name=program_name).first()
-        if not program:
-            raise ValueError(f"Program with name '{program_name}' not found.")
-        self.program_id = program.id
-        self.salary = cost
+    def __init__(self, program_id, salary, name):
+        self.program_id = program_id
+        self.salary = salary
         self.name = name
 
 
@@ -98,20 +97,22 @@ class DailyEntriesModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     number_of_participants = db.Column(db.Integer, nullable=False)
     program_id = db.Column(db.Integer, db.ForeignKey('program_model.id'), nullable=False)
-    date = db.Column(db.Date, nullable=False)
+    date = db.Column(db.Date, nullable=False, default=date.today())
 
-    def __init__(self, number_of_participants, program_id):
+    def __init__(self, number_of_participants, program_id, date):
         self.number_of_participants = number_of_participants
         self.program_id = program_id
+        self.date = date
 
 
 class TotalModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String(100), nullable=False)
-    date = db.Column(db.Date, nullable=False)
+    date = db.Column(db.DateTime, nullable=False, default=date.today())
     grand_total = db.Column(db.Float, nullable=False)
 
-    def __init__(self, grand_total, comment):
+    def __init__(self, grand_total, comment, entry_date=None):
         self.grand_total = grand_total
         self.comment = comment
+        self.date = entry_date or date.today()
 
