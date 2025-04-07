@@ -92,6 +92,7 @@ def add_delete_program():
 
     # If the request method is GET, render the form
     return render_template('add_delete_program.html')
+
 @main.route('/add_daily_totals', methods=['GET', 'POST'])
 def add_daily_totals():
     if request.method == 'POST':
@@ -145,10 +146,18 @@ def add_daily_totals():
             # Add the current daily total to the last grand total
             combined_total = daily_total + last_grand_total
 
+            total_annual_salary = db.session.query(
+                db.func.sum(CostsPerProgramModel.salary)
+            ).scalar() or 0.0
+            daily_salary_cost = total_annual_salary / 365
+
+            final_total = combined_total - daily_salary_cost
+
             # Create the new entry
             new_total = TotalModel(
-                grand_total=combined_total,
+                grand_total=final_total,
                 comment='program numbers entry',
+                entry_date=entry_date
             )
             db.session.add(new_total)
 

@@ -1,3 +1,5 @@
+import datetime
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
@@ -20,7 +22,7 @@ def create_app():
         db.create_all()
 
         if TotalModel.query.first() is None:
-            db.session.add(TotalModel(0.0, "Database created"))
+            db.session.add(TotalModel(0.0, "Database created", datetime.date.today()))
             db.session.commit()
 
     return app

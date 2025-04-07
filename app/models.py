@@ -111,8 +111,8 @@ class TotalModel(db.Model):
     date = db.Column(db.DateTime, nullable=False, default=date.today())
     grand_total = db.Column(db.Float, nullable=False)
 
-    def __init__(self, grand_total, comment, entry_date=None):
+    def __init__(self, grand_total, comment, entry_date):
         self.grand_total = grand_total
         self.comment = comment
-        self.date = entry_date or date.today()
+        self.date = entry_date
 
