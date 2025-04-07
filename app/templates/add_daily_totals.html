@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add/Delete Program</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        .title-bar {
+            background-color: #004080;
+            color: white;
+            padding: 15px 20px;
+            font-size: 24px;
+        }
+        .container {
+            padding: 20px;
+        }
+        .form-section {
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"], input[type="number"] {
+            padding: 8px;
+            width: 300px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #004080;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0055aa;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Blue title bar -->
+    <div class="title-bar">
+        <h1>Manage Daily Entries</h1>
+    </div>
+
+    <form action="{{ url_for('main.add_daily_totals') }}" method="POST">
+        <label for="date">Date</label>
+        <input type="date" id="date" name="date" required><br><br>
+
+        <div id="programs">
+            {% for program in programs %}
+                <div class="program-entry">
+                    <label for="program_{{ program.id }}">{{ program.name }}:</label>
+                    <input type="number" id="program_{{ program.id }}" name="number_of_participants" value="{{ last_entries[program.id] }}" required><br><br>
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit">Submit Entry</button>
+    </form>
+
+</body>
+</html>

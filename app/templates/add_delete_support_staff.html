@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Support Staff Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        .title-bar {
+            background-color: #004080;
+            color: white;
+            padding: 15px 20px;
+            font-size: 24px;
+        }
+        .container {
+            padding: 20px;
+        }
+        .form-section {
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"], input[type="number"] {
+            padding: 8px;
+            width: 300px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #004080;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0055aa;
+        }
+    </style>
+</head>
+<body>
+    <div class="title-bar">
+        Add/Delete Support Staff
+    </div>
+
+    <div class="container">
+        <form action="{{ url_for('main.add_delete_support_staff') }}" method="POST">
+            <label for="program_name">Program Name:</label>
+            <input type="text" id="program_name" name="program_name" required><br><br>
+
+            <label for="employee_name">Employee Name:</label>
+            <input type="text" id="employee_name" name="employee_name" required><br><br>
+
+            <label for="salary">Annual Salary:</label>
+            <input type="number" id="salary" name="salary" required><br><br>
+
+            <button type="submit" name="action" value="add">Add Staff</button>
+            <button type="submit" name="action" value="delete">Delete Staff</button>
+        </form>
+
+    </div>
+</body>
+</html>
