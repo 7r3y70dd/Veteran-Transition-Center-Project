@@ -109,10 +109,11 @@ class TotalModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String(100), nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=date.today())
+    amount = db.Column(db.Float, default=None)
     grand_total = db.Column(db.Float, nullable=False)
 
-    def __init__(self, grand_total, comment, entry_date):
+    def __init__(self, grand_total, comment, entry_date, amount=None):
         self.grand_total = grand_total
         self.comment = comment
         self.date = entry_date
-
+        self.amount = amount

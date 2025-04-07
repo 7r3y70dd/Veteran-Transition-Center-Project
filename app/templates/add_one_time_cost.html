@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One-Time Cost Submission</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+
+    <h2>Submit One-Time Cost</h2>
+
+    <form action="/add_one_time_cost" method="POST">
+        <!-- Float value input -->
+        <label for="float_value">Enter One-Time Cost:</label>
+        <input type="number" id="float_value" name="float_value" step="0.01" required>
+        <br><br>
+
+        <!-- String description input (textarea) -->
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" cols="50" required></textarea>
+        <br><br>
+
+        <!-- Submit button -->
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+</html>

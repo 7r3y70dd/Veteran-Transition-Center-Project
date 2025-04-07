@@ -1,13 +1,18 @@
 # from .models import User
+from datetime import timedelta
+
 from . import db
 from flask import render_template, request, redirect, url_for, Blueprint
 from .models import CostsPerProgramModel, ProgramModel, DailyEntriesModel, TotalModel
+from sqlalchemy import func
 
 main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
-    return render_template('index.html')
+    latest_total = TotalModel.query.order_by(TotalModel.id.desc()).first()
+
+    return render_template('index.html', total=round(latest_total.grand_total, 2))
 
 @main.route('/add_data')
 def add_data():
@@ -98,9 +103,13 @@ def add_daily_totals():
     if request.method == 'POST':
         from datetime import datetime
 
+
         entries = request.form.getlist('number_of_participants')
-        entry_date_str = request.form['date']
-        entry_date = datetime.strptime(entry_date_str, '%Y-%m-%d')
+        entry_date = datetime.now()  # Use current datetime directly
+
+        # entries = request.form.getlist('number_of_participants')
+        # entry_date_str = request.form['date']
+        # entry_date = datetime.strptime(entry_date_str, '%Y-%m-%d')
 
         daily_total = 0.0
 
@@ -116,7 +125,7 @@ def add_daily_totals():
             # Check if a daily entry already exists
             existing_entry = DailyEntriesModel.query.filter_by(
                 program_id=program.id,
-                date=entry_date_str
+                date=entry_date.date()
             ).first()
 
             if existing_entry:
@@ -130,14 +139,44 @@ def add_daily_totals():
                 )
                 db.session.add(new_entry)
 
+
         # After processing all programs, save the total
-        existing_total = TotalModel.query.filter_by(
-            date=entry_date,
-            comment='program numbers entry'
-        ).first()
+        # existing_total = TotalModel.query.filter_by(
+        #     date=entry_date.date(),
+        #     # comment='program numbers entry'
+        # ).first()
+        existing_total = TotalModel.query.filter(
+            func.date(TotalModel.date) == entry_date.date(),
+            TotalModel.comment == 'program numbers entry'
+        ).order_by(TotalModel.date.desc()).first()
+
+        cutoff_date = entry_date.date() - timedelta(days=1)
+
+        prior_entry = TotalModel.query.filter(
+            TotalModel.date <= cutoff_date
+        ).order_by(TotalModel.date.desc()).first()
+
+        previous_grand_total = prior_entry.grand_total if prior_entry else 0.0
+
+        updated_grand_total = previous_grand_total + daily_total
 
         if existing_total:
-            existing_total.grand_total = daily_total
+            existing_total.grand_total = updated_grand_total
+
+            subsequent_entries = TotalModel.query.filter(
+                TotalModel.date > existing_total.date,
+                TotalModel.comment != 'program numbers entry'
+            ).order_by(TotalModel.date.asc()).all()
+
+            running_total = existing_total.grand_total
+
+            print('starting total edited: ' + str(running_total))
+
+            for entry in subsequent_entries:
+                print('start runn  ' + str(running_total))
+                print('entry:  ' + str(entry.grand_total))
+                running_total = running_total - entry.amount
+                entry.grand_total = running_total
         else:
             # Get the most recent total from the TotalModel table (if any)
             last_total_entry = TotalModel.query.order_by(TotalModel.id.desc()).first()
@@ -157,7 +196,7 @@ def add_daily_totals():
             new_total = TotalModel(
                 grand_total=final_total,
                 comment='program numbers entry',
-                entry_date=entry_date
+                entry_date=datetime.now()
             )
             db.session.add(new_total)
 
@@ -182,3 +221,42 @@ def view_database():
     staff = CostsPerProgramModel.query.all()
     entries = DailyEntriesModel.query.all()
     return render_template('view_database.html', programs=programs, staff=staff, entries=entries)
+
+@main.route('/add_one_time_cost', methods=['GET', 'POST'])
+def add_one_time_cost():
+    if request.method == 'POST':
+        # Get the float value (one-time cost) and the description from the form
+        float_value = float(request.form['float_value'])
+        description = request.form['description']
+
+        # Get the latest total value from the TotalModel table
+        latest_total = TotalModel.query.order_by(TotalModel.id.desc()).first()
+
+        if latest_total:
+            from datetime import datetime
+            # Subtract the one-time cost from the latest total
+            updated_total = latest_total.grand_total - float_value
+
+            # Create a new row in the TotalModel table with the updated total
+            new_total = TotalModel(
+                grand_total=updated_total,
+                comment=description,
+                entry_date=datetime.now(),
+                amount=float_value
+            )
+            db.session.add(new_total)
+            db.session.commit()
+
+            # Redirect after adding the new entry
+            return redirect(url_for('main.index'))
+
+        else:
+            # If there's no total record yet, return an error (or handle as needed)
+            return "No existing total found in the database", 404
+
+    # If GET request, just render the form
+    return render_template('add_one_time_cost.html')
+
+@main.route('/adjust_program_rates')
+def adjust_program_rates():
+    return render_template('adjust_program_rates.html')

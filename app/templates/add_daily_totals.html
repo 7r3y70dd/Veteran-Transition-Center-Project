@@ -51,8 +51,10 @@
     </div>
 
     <form action="{{ url_for('main.add_daily_totals') }}" method="POST">
-        <label for="date">Date</label>
-        <input type="date" id="date" name="date" required><br><br>
+      <label for="datetime">Current Date and Time</label>
+      <input type="text" id="datetime" name="datetime" required readonly><br><br>
+
+      <script src="{{ url_for('static', filename='js/time_script.js') }}"></script>
 
         <div id="programs">
             {% for program in programs %}

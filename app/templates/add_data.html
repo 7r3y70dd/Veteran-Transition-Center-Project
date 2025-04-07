@@ -1,70 +1,173 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Veteran Transition Center</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            margin: 0;-->
+<!--            background-color: #f5f5f5;-->
+<!--        }-->
+
+<!--        .title-bar {-->
+<!--            background-color: #004080;-->
+<!--            color: white;-->
+<!--            padding: 20px;-->
+<!--            text-align: center;-->
+<!--            font-size: 28px;-->
+<!--        }-->
+
+<!--        .button-container {-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            align-items: center;-->
+<!--            padding: 40px;-->
+<!--            gap: 20px;-->
+<!--        }-->
+
+<!--        .menu-button {-->
+<!--            background-color: #0073e6;-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            padding: 20px 40px;-->
+<!--            font-size: 20px;-->
+<!--            width: 80%;-->
+<!--            max-width: 500px;-->
+<!--            border-radius: 8px;-->
+<!--            cursor: pointer;-->
+<!--            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);-->
+<!--            transition: background-color 0.3s;-->
+<!--        }-->
+
+<!--        .menu-button:hover {-->
+<!--            background-color: #005bb5;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--    <div class="title-bar">-->
+<!--        Veteran Transition Center-->
+<!--    </div>-->
+
+<!--    <div class="button-container">-->
+<!--        <form action="{{ url_for('main.add_delete_support_staff') }}">-->
+<!--            <button class="menu-button">Add/Delete Support Staff</button>-->
+<!--        </form>-->
+<!--        <form action="{{ url_for('main.add_daily_totals') }}">-->
+<!--            <button class="menu-button">Submit/Adjust Daily Total</button>-->
+<!--        </form>-->
+<!--        <form action="{{ url_for('main.add_delete_support_staff') }}">-->
+<!--            <button class="menu-button">Adjust Program Rates</button>-->
+<!--        </form>-->
+<!--        <form action="{{ url_for('main.add_delete_program') }}">-->
+<!--            <button class="menu-button">Add/Delete Program</button>-->
+<!--        </form>-->
+<!--        <form action="{{ url_for('main.add_one_time_cost') }}">-->
+<!--            <button class="menu-button">Add one time cost</button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>Veteran Transition Center</title>-->
+<!--  <link rel="stylesheet" href="{{ url_for('static', filename='add_style.css') }}">-->
+<!--</head>-->
+<!--<body>-->
+
+<!--  <header>-->
+<!--    <h1>Veteran Transition Center</h1>-->
+<!--  </header>-->
+
+<!--  <div class="buttons-container">-->
+<!--    &lt;!&ndash; Submit/Adjust Daily Total Button &ndash;&gt;-->
+<!--    <form action="{{ url_for('main.add_daily_totals') }}" class="full-width">-->
+<!--      <button type="submit">Submit/Adjust Daily Total</button>-->
+<!--    </form>-->
+
+<!--    &lt;!&ndash; Blue Section for Add/Delete Support Staff &ndash;&gt;-->
+<!--    <div class="button-section blue-section">-->
+<!--      <form action="{{ url_for('main.add_delete_support_staff') }}">-->
+<!--        <button type="submit" class="blue-button">Add/Delete Support Staff</button>-->
+<!--      </form>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Program Buttons: Adjust Program Rates and Add/Delete Program &ndash;&gt;-->
+<!--    <div class="button-section program-section">-->
+<!--      <form action="{{ url_for('main.adjust_program_rates') }}">-->
+<!--        <button type="submit">Adjust Program Rates</button>-->
+<!--      </form>-->
+<!--      <form action="{{ url_for('main.add_delete_program') }}">-->
+<!--        <button type="submit">Add/Delete Program</button>-->
+<!--      </form>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Add One-Time Cost Button &ndash;&gt;-->
+<!--    <div class="button-section">-->
+<!--      <form action="{{ url_for('main.add_one_time_cost') }}">-->
+<!--        <button type="submit">Add One-Time Cost</button>-->
+<!--      </form>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Veteran Transition Center</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #f5f5f5;
-        }
+  <meta charset="UTF-8">
+  <title>Veteran Transition Center</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='add_style.css') }}">
 
-        .title-bar {
-            background-color: #004080;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            font-size: 28px;
-        }
-
-        .button-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px;
-            gap: 20px;
-        }
-
-        .menu-button {
-            background-color: #0073e6;
-            color: white;
-            border: none;
-            padding: 20px 40px;
-            font-size: 20px;
-            width: 80%;
-            max-width: 500px;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s;
-        }
-
-        .menu-button:hover {
-            background-color: #005bb5;
-        }
-    </style>
 </head>
 <body>
 
-    <div class="title-bar">
-        Veteran Transition Center
+  <header>
+    <h1>Veteran Transition Center</h1>
+  </header>
+
+  <!-- Full-width button outside the grid, positioned above -->
+  <div class="full-width-button-container">
+    <form action="{{ url_for('main.add_daily_totals') }}">
+      <button class="full-width-button" type="submit">Submit/Adjust Daily Total</button>
+    </form>
+  </div>
+
+  <!-- Container for the 3 columns of buttons -->
+  <div class="buttons-container">
+
+    <!-- Add/Delete Support Staff Section (Blue) -->
+    <div class="blue-section">
+      <form action="{{ url_for('main.add_delete_support_staff') }}">
+        <button class="blue-button" type="submit">Add/Delete Support Staff</button>
+      </form>
     </div>
 
-    <div class="button-container">
-        <form action="{{ url_for('main.add_delete_support_staff') }}">
-            <button class="menu-button">Add/Delete Support Staff</button>
-        </form>
-        <form action="{{ url_for('main.add_daily_totals') }}">
-            <button class="menu-button">Submit/Adjust Daily Total</button>
-        </form>
-        <form action="{{ url_for('main.add_delete_support_staff') }}">
-            <button class="menu-button">Adjust Program Rates</button>
-        </form>
-        <form action="{{ url_for('main.add_delete_program') }}">
-            <button class="menu-button">Add/Delete Program</button>
-        </form>
+    <!-- Adjust Program Rates and Add/Delete Program Section -->
+    <div class="program-section">
+      <form action="{{ url_for('main.adjust_program_rates') }}">
+        <button type="submit">Adjust Program Rates</button>
+      </form>
+      <form action="{{ url_for('main.add_delete_program') }}">
+        <button type="submit">Add/Delete Program</button>
+      </form>
     </div>
+
+    <!-- Add One-Time Cost Section -->
+    <div class="button-section">
+      <form action="{{ url_for('main.add_one_time_cost') }}">
+        <button type="submit">Add One-Time Cost</button>
+      </form>
+    </div>
+
+  </div>
 
 </body>
 </html>
