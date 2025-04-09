@@ -19,7 +19,8 @@
     <form action="{{ url_for('main.add_data') }}">
       <button type="submit">Add Data</button>
     </form>
-    <form action="{{ url_for('main.view_data') }}">
+    <!-- changed main.view_data -> main.view_database  -->
+    <form action="{{ url_for('main.view_database') }}"> 
       <button type="submit">View Data</button>
     </form>
   </div>

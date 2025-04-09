@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -63,5 +63,157 @@
         </form>
 
     </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Support Staff Management</title>
+    <style>
+        /* Reset & Base Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #f0f0f0;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1a1a1a;
+            padding: 15px 30px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.2em;
+            color: #00d1b2;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: #ccc;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            color: #00d1b2;
+        }
+
+        /* Page Title */
+        .title-bar {
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            padding: 30px 20px 10px;
+            color: #00d1b2;
+            border-bottom: 2px solid #00d1b2;
+        }
+
+        /* Container Styling */
+        .container {
+            padding: 40px 20px;
+            max-width: 600px;
+            margin: 30px auto;
+            background-color: #1e1e1e;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: #ccc;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 10px;
+            width: 100%;
+            background-color: #2c2c2c;
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: #f0f0f0;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #00d1b2;
+        }
+
+        button {
+            margin-top: 25px;
+            margin-right: 10px;
+            padding: 12px 25px;
+            background-color: #00d1b2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #00b39f;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">Input Data</div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('main.index') }}">Home</a></li>
+            <li><a href="{{ url_for('main.view_database') }}">View Data</a></li>
+        </ul>
+    </nav>
+
+    <!-- Page Title -->
+    <div class="title-bar">
+        Add/Delete Support Staff
+    </div>
+
+    <!-- Form Container -->
+    <div class="container">
+        <form action="{{ url_for('main.add_delete_support_staff') }}" method="POST">
+            <label for="program_name">Program Name:</label>
+            <input type="text" id="program_name" name="program_name" required>
+
+            <label for="employee_name">Employee Name:</label>
+            <input type="text" id="employee_name" name="employee_name" required>
+
+            <label for="salary">Annual Salary:</label>
+            <input type="number" id="salary" name="salary" required>
+
+            <button type="submit" name="action" value="add">Add Staff</button>
+            <button type="submit" name="action" value="delete">Delete Staff</button>
+        </form>
+    </div>
+
 </body>
 </html>
