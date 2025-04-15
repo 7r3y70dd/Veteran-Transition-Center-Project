@@ -4,12 +4,141 @@
   <meta charset="UTF-8">
   <title>Veteran Transition Center</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #121212;
+      color: #f0f0f0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #1a1a1a;
+      padding: 15px 30px;
+      border-bottom: 1px solid #333;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar-section {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .navbar-left {
+      justify-content: flex-start;
+    }
+
+    .navbar-center {
+      justify-content: center;
+    }
+
+    .navbar-right {
+      justify-content: flex-end;
+    }
+
+    .logo {
+      font-size: 1.2em;
+      color: #00d1b2;
+      font-weight: bold;
+    }
+
+    .navbar-title h1 {
+      font-size: 1.5em;
+      color: #00d1b2;
+      border-bottom: 2px solid #00d1b2;
+      padding-bottom: 5px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: #ccc;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links li a:hover {
+      color: #00d1b2;
+    }
+
+    /* CONTENT */
+    .subtitle-container {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 1.3em;
+      color: #ccc;
+    }
+
+    .buttons-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+
+    button {
+      padding: 15px 30px;
+      background-color: #00d1b2;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #00b39f;
+      transform: translateY(-2px);
+      color: #000;
+    }
+    .subtitle-container {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 1.3em;
+  color: #4caf50; /* Green color */
+}
+
+  </style>
 </head>
 <body>
 
-  <header>
-    <h1>Veteran Transition Center</h1>
-  </header>
+  <nav class="navbar">
+    <div class="navbar-section navbar-left">
+      <div class="logo">Welcome</div>
+    </div>
+  
+    <div class="navbar-section navbar-center">
+      <div class="navbar-title">
+        <h1>Veteran Transition Center</h1>
+      </div>
+    </div>
+  
+    <div class="navbar-section navbar-right">
+      <!-- Placeholder to balance center -->
+    </div>
+  </nav>
+  
 
   <div class="subtitle-container">
     Current total: {{ total }}
@@ -19,7 +148,7 @@
     <form action="{{ url_for('main.add_data') }}">
       <button type="submit">Add Data</button>
     </form>
-    <form action="{{ url_for('main.view_data') }}">
+    <form action="{{ url_for('main.view_database') }}">
       <button type="submit">View Data</button>
     </form>
   </div>
