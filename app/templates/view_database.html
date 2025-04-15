@@ -1,43 +1,155 @@
-<h1>Program Table</h1>
-<table border="1">
-    <tr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Tables</title>
+  <style>
+    .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1a1a1a;
+  padding: 15px 30px;
+  border-bottom: 1px solid #333;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.2em;
+  color: #00d1b2;
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #ccc;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #00d1b2;
+}
+    body {
+      background-color: #111;
+      color: #eee;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-top: 40px;
+      font-size: 1.5em;
+      color: #fff;
+      border-left: 5px solid #00d1b2;
+      padding-left: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #333;
+    }
+
+    th {
+      background-color: #2c2c2c;
+      color: #00d1b2;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 0.9em;
+    }
+
+    tr:hover {
+      background-color: #2a2a2a;
+    }
+
+    td {
+      color: #ccc;
+    }
+
+    .container {
+      margin-bottom: 50px;
+    }
+  </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">📊 Data</div>
+        <ul class="nav-links">
+          <li><a href="{{ url_for('main.index') }}">Home</a></li>
+          <li><a href="{{url_for('main.add_data')}}">Input Data</a></li>
+        </ul>
+      </nav>
+  <div class="container">
+    <h1>Program Table</h1>
+    <table>
+      <tr>
         <th>ID</th><th>Name</th><th>Rate</th>
-    </tr>
-    {% for program in programs %}
-    <tr>
+      </tr>
+      {% for program in programs %}
+      <tr>
         <td>{{ program.id }}</td>
         <td>{{ program.name }}</td>
         <td>{{ program.rate }}</td>
-    </tr>
-    {% endfor %}
-</table>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
 
-<h1>Support Staff Table</h1>
-<table border="1">
-    <tr>
+  <div class="container">
+    <h1>Support Staff Table</h1>
+    <table>
+      <tr>
         <th>ID</th><th>Program ID</th><th>Name</th><th>Salary</th>
-    </tr>
-    {% for staff_member in staff %}
-    <tr>
+      </tr>
+      {% for staff_member in staff %}
+      <tr>
         <td>{{ staff_member.id }}</td>
         <td>{{ staff_member.program_id }}</td>
         <td>{{ staff_member.name }}</td>
         <td>{{ staff_member.salary }}</td>
-    </tr>
-    {% endfor %}
-</table>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
 
-<h1>Daily Entries Table</h1>
-<table border="1">
-    <tr>
+  <div class="container">
+    <h1>Daily Entries Table</h1>
+    <table>
+      <tr>
         <th>ID</th><th>Program ID</th><th># Participants</th><th>Date</th>
-    </tr>
-    {% for entry in entries %}
-    <tr>
+      </tr>
+      {% for entry in entries %}
+      <tr>
         <td>{{ entry.id }}</td>
         <td>{{ entry.program_id }}</td>
         <td>{{ entry.number_of_participants }}</td>
         <td>{{ entry.date }}</td>
-    </tr>
-    {% endfor %}
-</table>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+</body>
+</html>
