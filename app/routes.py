@@ -257,6 +257,22 @@ def add_one_time_cost():
     # If GET request, just render the form
     return render_template('add_one_time_cost.html')
 
-@main.route('/adjust_program_rates')
+@main.route('/adjust_program_rates', methods=['GET', 'POST'])
 def adjust_program_rates():
+    if request.method == 'POST':
+        program_name = request.form['program_name']
+        new_rate = float(request.form['new_rate'])
+
+        # Look up the program by name
+        program = ProgramModel.query.filter_by(name=program_name).first()
+
+        if program:
+            program.rate = new_rate
+            db.session.commit()
+            message = f"Rate updated for {program_name}."
+        else:
+            message = f"Program '{program_name}' not found."
+
+        return render_template('adjust_program_rates.html', message=message)
+
     return render_template('adjust_program_rates.html')
