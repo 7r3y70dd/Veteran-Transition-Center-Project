@@ -7,3 +7,4 @@ to run:
 % pip install -r requirements.txt
 % python run.py
 ```
+Link to setup guide: https://docs.google.com/document/d/1wwMYXNPV0_sFaZhyopvwsdqWWbHvvkpZvwD9uiJ6kRI/edit?tab=t.0
