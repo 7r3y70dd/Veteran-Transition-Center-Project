@@ -59,8 +59,8 @@ def add_delete_support_staff():
     return render_template("add_delete_support_staff.html", programs=all_programs)
 
 @main.route('/veiw_data')
-def view_data():
-    return render_template('view_data.html')
+def view_data_menu():
+    return render_template('view_data_menu.html')
 
 
 @main.route('/add_delete_program', methods=['GET', 'POST'])
