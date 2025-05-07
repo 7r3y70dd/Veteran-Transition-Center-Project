@@ -55,7 +55,8 @@ def add_delete_support_staff():
         else:
             return "Program not found", 404
 
-    return render_template('add_delete_support_staff.html')
+    all_programs = ProgramModel.query.order_by(ProgramModel.name).all()
+    return render_template("add_delete_support_staff.html", programs=all_programs)
 
 @main.route('/veiw_data')
 def view_data():
@@ -270,20 +271,20 @@ def add_daily_totals():
         )
 
         if existing_total:
-            existing_total.grand_total = updated_grand_total
-
-            subsequent_entries = TotalModel.query.filter(
-                TotalModel.date > existing_total.date,
-                TotalModel.comment != "program numbers entry"
-            ).order_by(TotalModel.date.asc()).all()
-
             total_annual_salary = db.session.query(
                 db.func.sum(CostsPerProgramModel.salary)
             ).scalar() or Decimal("0")
 
             daily_salary_cost = total_annual_salary / 365
 
-            running_total = existing_total.grand_total - daily_salary_cost
+            existing_total.grand_total = updated_grand_total - daily_salary_cost
+
+            subsequent_entries = TotalModel.query.filter(
+                TotalModel.date > existing_total.date,
+                TotalModel.comment != "program numbers entry"
+            ).order_by(TotalModel.date.asc()).all()
+
+            running_total = existing_total.grand_total
 
             print(
                 f"combined_total: {existing_total.grand_total} - "
@@ -400,19 +401,17 @@ def add_one_time_cost():
 
 @main.route('/adjust_program_rates', methods=['GET', 'POST'])
 def adjust_program_rates():
+    all_programs = ProgramModel.query.order_by(ProgramModel.name).all()
     if request.method == 'POST':
         program_name = request.form['program_name']
         new_rate = float(request.form['new_rate'])
 
         program = ProgramModel.query.filter_by(name=program_name).first()
 
-        if program:
-            program.rate = new_rate
-            db.session.commit()
-            message = f"Rate updated for {program_name}."
-        else:
-            message = f"Program '{program_name}' not found."
+        program.rate = new_rate
+        db.session.commit()
+        message = f"Rate updated for {program_name}."
 
-        return render_template('adjust_program_rates.html', message=message)
+        return render_template('adjust_program_rates.html', message=message, programs=all_programs)
 
-    return render_template('adjust_program_rates.html')
+    return render_template('adjust_program_rates.html', programs=all_programs)

@@ -134,7 +134,13 @@
     <div class="container">
         <form action="{{ url_for('main.add_delete_support_staff') }}" method="POST">
             <label for="program_name">Program Name:</label>
-            <input type="text" id="program_name" name="program_name" required>
+
+            <select id="program_name" name="program_name" required>
+                <option value="" disabled selected>Select a program</option>
+                {% for program in programs %}
+                    <option value="{{ program.id }}">{{ program.name }}</option>
+                {% endfor %}
+            </select>
 
             <label for="employee_name">Employee Name:</label>
             <input type="text" id="employee_name" name="employee_name" required>

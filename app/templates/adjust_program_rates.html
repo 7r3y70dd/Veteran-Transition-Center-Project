@@ -140,8 +140,14 @@
 
     <div class="container">
         <form action="{{ url_for('main.adjust_program_rates') }}" method="POST">
-            <label for="program_name">Program Name</label>
-            <input type="text" id="program_name" name="program_name" required>
+            <label for="program_name">Program Name:</label>
+
+            <select id="program_name" name="program_name" required>
+                <option value="" disabled selected>Select a program</option>
+                {% for program in programs %}
+                    <option value="{{ program.id }}">{{ program.name }}</option>
+                {% endfor %}
+            </select>
 
             <label for="new_rate">New Rate</label>
             <input type="number" id="new_rate" name="new_rate" step="0.01" required>
