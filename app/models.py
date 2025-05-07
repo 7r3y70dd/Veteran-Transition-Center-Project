@@ -73,7 +73,7 @@ class CostsPerProgramModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     program_id = db.Column(db.Integer, db.ForeignKey('program_model.id'), nullable=False)
     name = db.Column(db.String(100), nullable=False)
-    salary = db.Column(db.Float, nullable=False)
+    salary = db.Column(db.Numeric(14, 2))
 
     def __init__(self, program_id, salary, name):
         self.program_id = program_id
@@ -87,7 +87,7 @@ class ProgramModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    rate = db.Column(db.Float, nullable=False)
+    rate = db.Column(db.Numeric(14, 2))
 
     def __init__(self, program_name, rate):
         self.name = program_name
@@ -109,8 +109,8 @@ class TotalModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String(100), nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=date.today())
-    amount = db.Column(db.Float, default=None)
-    grand_total = db.Column(db.Float, nullable=False)
+    amount = db.Column(db.Numeric(14, 2))
+    grand_total = db.Column(db.Numeric(14, 2))
 
     def __init__(self, grand_total, comment, entry_date, amount=None):
         self.grand_total = grand_total
